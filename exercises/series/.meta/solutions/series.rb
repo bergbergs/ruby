@@ -2,16 +2,19 @@ class Series
   def initialize(series)
     @series = (series)
   end
-  def slices(n)
-    if n > @series.length
-      raise ArgumentError
-    end
+
+  def slices(length:)
+    raise ArgumentError unless valid_slice_length?(length)
     series = @series
     substrings = []
-    until series.length < n
-      substrings << series[0..n-1]
+    until series.length < length
+      substrings << series[0..length-1]
       series = series[1..-1]
     end
     substrings
+  end
+
+  def valid_slice_length?(length)
+    (1..@series.length).cover?(length)
   end
 end
